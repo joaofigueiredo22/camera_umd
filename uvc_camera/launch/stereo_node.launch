@@ -1,17 +1,53 @@
 <launch>
   <node pkg="uvc_camera" type="uvc_stereo_node" name="uvc_camera_stereo">
-    <param name="width" type="int" value="320" />
-    <param name="height" type="int" value="240" />
-    <param name="fps" type="int" value="30" />
+    <param name="width" type="int" value="752" />
+    <param name="height" type="int" value="416" />
+    <param name="fps" type="int" value="10" />
     <param name="frame" type="string" value="wide_stereo" />
 
     <param name="auto_focus" type="bool" value="False" />
     <param name="focus_absolute" type="int" value="0" />
     <!-- other supported params: auto_exposure, exposure_absolute, brightness, power_line_frequency -->
 
-    <param name="left/device" type="string" value="/dev/video0" />
+    <param name="left/device" type="string" value="/dev/video2" />
     <param name="right/device" type="string" value="/dev/video1" />
+    <param name="center/device" type="string" value="/dev/video3" />
+    <param name="center2/device" type="string" value="/dev/video4" />
+    <param name="five/device" type="string" value="/dev/video0" />
     <param name="left/camera_info_url" type="string" value="file://$(find uvc_camera)/example-left.yaml" />
     <param name="right/camera_info_url" type="string" value="file://$(find uvc_camera)/example-right.yaml" />
+    <param name="center/camera_info_url" type="string" value="file://$(find uvc_camera)/example-center.yaml" />
+    <param name="center2/camera_info_url" type="string" value="file://$(find uvc_camera)/example-center2.yaml" />
+    <param name="five/camera_info_url" type="string" value="file://$(find uvc_camera)/example-five.yaml" />
   </node>
+
+<!--  <node pkg="Camera_calibration" name="basic_controls" type="basic_controls.py">-->
+
+<!--  </node>-->
+
+  <node name="image_view_left" pkg="image_view" type="image_view" respawn="false" output="screen">
+    <remap from="image" to="/left/image_raw"/>
+    <param name="autosize" value="true" />
+  </node>
+
+  <node name="image_view_right" pkg="image_view" type="image_view" respawn="false" output="screen">
+    <remap from="image" to="/right/image_raw"/>
+    <param name="autosize" value="true" />
+  </node>
+
+  <node name="image_view_center" pkg="image_view" type="image_view" respawn="false" output="screen">
+    <remap from="image" to="/center/image_raw"/>
+    <param name="autosize" value="true" />
+  </node>
+
+  <node name="image_view_center2" pkg="image_view" type="image_view" respawn="false" output="screen">
+    <remap from="image" to="/center2/image_raw"/>
+    <param name="autosize" value="true" />
+  </node>
+
+  <node name="image_view_five" pkg="image_view" type="image_view" respawn="false" output="screen">
+    <remap from="image" to="/five/image_raw"/>
+    <param name="autosize" value="true" />
+  </node>
+
 </launch>
